@@ -1,0 +1,78 @@
+.receipt-modal {
+  max-width: 600px;
+}
+
+.receipt-header {
+  text-align: center;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 20px;
+  margin-bottom: 25px;
+}
+
+.receipt-header h2 {
+  color: #27ae60;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.order-id {
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.receipt-body {
+  margin-bottom: 25px;
+}
+
+.customer-info {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+}
+
+.customer-info p {
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.receipt-items h3 {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.receipt-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  color: #666;
+}
+
+.receipt-total {
+  background: #667eea;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.receipt-total h3 {
+  font-size: 24px;
+}
+
+.close-receipt-btn {
+  width: 100%;
+  background: #667eea;
+  color: white;
+  padding: 14px;
+  font-size: 16px;
+}
+
+.close-receipt-btn:hover {
+  background: #5568d3;
+}
