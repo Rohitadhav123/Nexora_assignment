@@ -16,7 +16,6 @@ function App() {
   const [receipt, setReceipt] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Fetch products
   useEffect(() => {
     fetchProducts();
     fetchCart();
@@ -38,7 +37,6 @@ function App() {
       setCart(res.data);
     } catch (error) {
       console.error('Failed to load cart:', error);
-      // Don't show toast for cart errors on initial load
     }
   };
 
@@ -59,10 +57,8 @@ function App() {
     if (newQuantity < 1) return;
     
     try {
-      // Remove and re-add with new quantity
       await axios.delete(`/api/cart/${itemId}`);
       
-      // Get the product ID from current cart
       const item = cart.items.find(i => i._id === itemId);
       if (item) {
         await axios.post('/api/cart', { 
@@ -75,7 +71,7 @@ function App() {
       toast.success('Quantity updated!');
     } catch (error) {
       toast.error('Failed to update quantity');
-      await fetchCart(); // Refresh cart on error
+      await fetchCart();
     }
   };
 
@@ -144,6 +140,7 @@ function App() {
           onClose={() => setShowCheckout(false)}
           onSubmit={handleCheckout}
           loading={loading}
+          cartTotal={cart.total}
         />
       )}
 

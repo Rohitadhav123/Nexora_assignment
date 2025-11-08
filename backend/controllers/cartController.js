@@ -1,8 +1,6 @@
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 
-// @desc    Get all cart items with total
-// @route   GET /api/cart
 exports.getCart = async (req, res) => {
   try {
     const cartItems = await Cart.find().populate('productId');
@@ -25,8 +23,6 @@ exports.getCart = async (req, res) => {
   }
 };
 
-// @desc    Add item to cart or update quantity
-// @route   POST /api/cart
 exports.addToCart = async (req, res) => {
   try {
     const { productId, quantity } = req.body;
@@ -35,21 +31,17 @@ exports.addToCart = async (req, res) => {
       return res.status(400).json({ message: 'Product ID and quantity required' });
     }
     
-    // Check if product exists
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
     
-    // Check if item already in cart
     let cartItem = await Cart.findOne({ productId });
     
     if (cartItem) {
-      // Update existing quantity
       cartItem.quantity += quantity;
       await cartItem.save();
     } else {
-      // Create new cart item
       cartItem = await Cart.create({ productId, quantity });
     }
     
@@ -60,8 +52,6 @@ exports.addToCart = async (req, res) => {
   }
 };
 
-// @desc    Remove item from cart
-// @route   DELETE /api/cart/:id
 exports.removeFromCart = async (req, res) => {
   try {
     const cartItem = await Cart.findByIdAndDelete(req.params.id);

@@ -1,6 +1,10 @@
 import './ReceiptModal.css';
 
 function ReceiptModal({ receipt, onClose }) {
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content receipt-modal" onClick={(e) => e.stopPropagation()}>
@@ -14,6 +18,12 @@ function ReceiptModal({ receipt, onClose }) {
             <p><strong>Customer:</strong> {receipt.customerName}</p>
             <p><strong>Email:</strong> {receipt.customerEmail}</p>
             <p><strong>Date:</strong> {new Date(receipt.timestamp).toLocaleString()}</p>
+            {receipt.paymentId && receipt.paymentId !== 'N/A' && (
+              <>
+                <p><strong>Payment Method:</strong> {receipt.paymentMethod}</p>
+                <p><strong>Payment ID:</strong> {receipt.paymentId}</p>
+              </>
+            )}
           </div>
 
           <div className="receipt-items">
@@ -31,9 +41,14 @@ function ReceiptModal({ receipt, onClose }) {
           </div>
         </div>
 
-        <button className="close-receipt-btn" onClick={onClose}>
-          Close
-        </button>
+        <div className="receipt-actions">
+          <button className="print-receipt-btn" onClick={handlePrint}>
+            🖨️ Print Receipt
+          </button>
+          <button className="close-receipt-btn" onClick={onClose}>
+            ✓ Close & Continue Shopping
+          </button>
+        </div>
       </div>
     </div>
   );

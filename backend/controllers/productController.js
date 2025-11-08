@@ -1,12 +1,9 @@
 const Product = require('../models/Product');
 
-// @desc    Get all products
-// @route   GET /api/products
 exports.getProducts = async (req, res) => {
   try {
     let products = await Product.find();
     
-    // If no products exist, seed some sample data
     if (products.length === 0) {
       const sampleProducts = [
         { 

@@ -1,23 +1,19 @@
 const Cart = require('../models/Cart');
 
-// @desc    Process checkout and return receipt
-// @route   POST /api/checkout
 exports.processCheckout = async (req, res) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, paymentId, orderId } = req.body;
     
     if (!name || !email) {
       return res.status(400).json({ message: 'Name and email required' });
     }
     
-    // Get cart items from server
     const serverCart = await Cart.find().populate('productId');
     
     if (serverCart.length === 0) {
       return res.status(400).json({ message: 'Cart is empty' });
     }
     
-    // Calculate total
     let total = 0;
     const items = serverCart.map(item => {
       const subtotal = item.productId.price * item.quantity;
@@ -30,18 +26,18 @@ exports.processCheckout = async (req, res) => {
       };
     });
     
-    // Create receipt
     const receipt = {
-      orderId: 'ORD-' + Date.now(),
+      orderId: orderId || 'ORD-' + Date.now(),
       customerName: name,
       customerEmail: email,
       items: items,
       total: total.toFixed(2),
       timestamp: new Date().toISOString(),
-      status: 'success'
+      status: 'success',
+      paymentId: paymentId || 'N/A',
+      paymentMethod: paymentId ? 'Razorpay' : 'COD'
     };
     
-    // Clear cart after successful checkout
     await Cart.deleteMany({});
     
     res.json(receipt);

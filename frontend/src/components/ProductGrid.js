@@ -1,13 +1,11 @@
 import './ProductGrid.css';
 
 function ProductGrid({ products, cart, onAddToCart, onRemoveFromCart, onUpdateQuantity, loading }) {
-  // Get quantity of a product from cart
   const getProductQuantity = (productId) => {
     const cartItem = cart.items.find(item => item.product._id === productId);
     return cartItem ? cartItem.quantity : 0;
   };
 
-  // Get cart item ID for a product
   const getCartItemId = (productId) => {
     const cartItem = cart.items.find(item => item.product._id === productId);
     return cartItem ? cartItem._id : null;
@@ -23,10 +21,8 @@ function ProductGrid({ products, cart, onAddToCart, onRemoveFromCart, onUpdateQu
     
     if (cartItemId) {
       if (currentQty > 1) {
-        // Decrease quantity by 1
         onUpdateQuantity(cartItemId, currentQty - 1);
       } else {
-        // Remove item completely when quantity is 1
         onRemoveFromCart(cartItemId);
       }
     }
