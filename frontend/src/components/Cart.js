@@ -25,26 +25,33 @@ function Cart({ cart, onRemove, onUpdateQuantity, onCheckout, onContinueShopping
             <div className="item-details">
               <h3>{item.product.name}</h3>
               <p className="item-description">{item.product.description}</p>
-              <p className="item-price">${item.product.price.toFixed(2)} each</p>
+              <p className="item-price">₹{item.product.price.toFixed(2)} each</p>
               
               <div className="quantity-controls">
                 <button 
-                  className="qty-btn"
-                  onClick={() => onUpdateQuantity(item._id, item.quantity - 1)}
-                  disabled={item.quantity <= 1}
+                  className="qty-btn qty-decrease"
+                  onClick={() => {
+                    if (item.quantity === 1) {
+                      onRemove(item._id);
+                    } else {
+                      onUpdateQuantity(item._id, item.quantity - 1);
+                    }
+                  }}
+                  title={item.quantity === 1 ? "Remove item" : "Decrease quantity"}
                 >
                   −
                 </button>
                 <span className="quantity-display">{item.quantity}</span>
                 <button 
-                  className="qty-btn"
+                  className="qty-btn qty-increase"
                   onClick={() => onUpdateQuantity(item._id, item.quantity + 1)}
+                  title="Increase quantity"
                 >
                   +
                 </button>
               </div>
               
-              <p className="item-subtotal">Subtotal: ${item.subtotal}</p>
+              <p className="item-subtotal">Subtotal: ₹{item.subtotal}</p>
             </div>
             <button 
               className="remove-btn"
@@ -60,11 +67,11 @@ function Cart({ cart, onRemove, onUpdateQuantity, onCheckout, onContinueShopping
       <div className="cart-summary">
         <div className="summary-row">
           <span>Subtotal:</span>
-          <span>${cart.total}</span>
+          <span>₹{cart.total}</span>
         </div>
         <div className="summary-row total-row">
           <span>Total:</span>
-          <span>${cart.total}</span>
+          <span>₹{cart.total}</span>
         </div>
         <div className="cart-actions">
           <button className="continue-btn" onClick={onContinueShopping}>

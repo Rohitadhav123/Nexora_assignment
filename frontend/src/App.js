@@ -42,12 +42,12 @@ function App() {
     }
   };
 
-  const addToCart = async (productId) => {
+  const addToCart = async (productId, quantity = 1) => {
     setLoading(true);
     try {
-      await axios.post('/api/cart', { productId, quantity: 1 });
+      await axios.post('/api/cart', { productId, quantity });
       await fetchCart();
-      toast.success('Added to cart!');
+      toast.success(`Added ${quantity} item(s) to cart!`);
     } catch (error) {
       toast.error('Failed to add to cart');
     } finally {
@@ -113,7 +113,7 @@ function App() {
             className="cart-btn"
             onClick={() => setShowCart(!showCart)}
           >
-            Cart ({cart.items.length})
+            Cart ({cart.items.reduce((total, item) => total + item.quantity, 0)})
           </button>
         </div>
       </header>
@@ -121,8 +121,11 @@ function App() {
       <main className="container">
         {!showCart ? (
           <ProductGrid 
-            products={products} 
+            products={products}
+            cart={cart}
             onAddToCart={addToCart}
+            onRemoveFromCart={removeFromCart}
+            onUpdateQuantity={updateQuantity}
             loading={loading}
           />
         ) : (

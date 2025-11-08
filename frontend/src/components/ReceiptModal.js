@@ -21,13 +21,13 @@ function ReceiptModal({ receipt, onClose }) {
             {receipt.items.map((item, index) => (
               <div key={index} className="receipt-item">
                 <span>{item.name} x {item.quantity}</span>
-                <span>${item.subtotal}</span>
+                <span>₹{item.subtotal}</span>
               </div>
             ))}
           </div>
 
           <div className="receipt-total">
-            <h3>Total: ${receipt.total}</h3>
+            <h3>Total: ₹{receipt.total}</h3>
           </div>
         </div>
 
