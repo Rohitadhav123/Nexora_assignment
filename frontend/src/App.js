@@ -55,6 +55,30 @@ function App() {
     }
   };
 
+  const updateQuantity = async (itemId, newQuantity) => {
+    if (newQuantity < 1) return;
+    
+    try {
+      // Remove and re-add with new quantity
+      await axios.delete(`/api/cart/${itemId}`);
+      
+      // Get the product ID from current cart
+      const item = cart.items.find(i => i._id === itemId);
+      if (item) {
+        await axios.post('/api/cart', { 
+          productId: item.product._id, 
+          quantity: newQuantity 
+        });
+      }
+      
+      await fetchCart();
+      toast.success('Quantity updated!');
+    } catch (error) {
+      toast.error('Failed to update quantity');
+      await fetchCart(); // Refresh cart on error
+    }
+  };
+
   const removeFromCart = async (itemId) => {
     try {
       await axios.delete(`/api/cart/${itemId}`);
@@ -105,6 +129,7 @@ function App() {
           <Cart 
             cart={cart}
             onRemove={removeFromCart}
+            onUpdateQuantity={updateQuantity}
             onCheckout={() => setShowCheckout(true)}
             onContinueShopping={() => setShowCart(false)}
           />

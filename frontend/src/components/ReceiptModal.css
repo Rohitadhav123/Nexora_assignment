@@ -1,5 +1,17 @@
 .receipt-modal {
   max-width: 600px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .receipt-header {
@@ -26,7 +38,7 @@
 }
 
 .customer-info {
-  background: #f8f9fa;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 25px;
@@ -53,7 +65,7 @@
 }
 
 .receipt-total {
-  background: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 20px;
   border-radius: 8px;
@@ -67,12 +79,26 @@
 
 .close-receipt-btn {
   width: 100%;
-  background: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 14px;
   font-size: 16px;
 }
 
 .close-receipt-btn:hover {
-  background: #5568d3;
+  background: linear-gradient(135deg, #5568d3 0%, #6a3d8f 100%);
+}
+
+@media (max-width: 480px) {
+  .receipt-modal {
+    max-width: 95%;
+  }
+
+  .receipt-header h2 {
+    font-size: 26px;
+  }
+
+  .receipt-total h3 {
+    font-size: 20px;
+  }
 }
